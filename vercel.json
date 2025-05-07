@@ -6,8 +6,13 @@
             "config": {
                 "maxLambdaSize": "50mb",
                 "includeFiles": [
-                    "model/**"
-                ]
+                    "model/**",
+                    "app.py"
+                ],
+                "environmentVariables": {
+                    "JOBLIB_MULTIPROCESSING": "0",
+                    "LOKY_MAX_CPU_COUNT": "1"
+                }
             }
         }
     ],
