@@ -2,39 +2,27 @@ import os
 import warnings
 from flask import Flask, request, jsonify
 import joblib
-from sklearn.externals.joblib import parallel_backend
+# from joblib import parallel_backend  # Jangan dulu pakai ini
 
-# Suppress joblib warnings
 warnings.filterwarnings("ignore", category=UserWarning)
-os.environ["JOBLIB_START_METHOD"] = "forkserver"
-os.environ["LOKY_MAX_CPU_COUNT"] = "1"
 
 app = Flask(__name__)
 
-# Config paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_DIR = os.path.join(BASE_DIR, 'models')
+MODEL_DIR = os.path.join(BASE_DIR, 'model')
 MODEL_VERSION = "v2.1"
 
-# Model paths
 model_path = os.path.join(MODEL_DIR, f'model_pengaduan_{MODEL_VERSION}.pkl')
 vectorizer_path = os.path.join(MODEL_DIR, f'vectorizer_pengaduan_{MODEL_VERSION}.pkl')
 
-# Load models with threading backend
 try:
-    with parallel_backend('threading'):
-        model = joblib.load(
-            model_path,
-            mmap_mode='r',
-            prefer='threads'
-        )
-        vectorizer = joblib.load(
-            vectorizer_path,
-            mmap_mode='r',
-            prefer='threads'
-        )
+    print(f"Model path: {model_path}")
+    print(f"Vectorizer path: {vectorizer_path}")
+    model = joblib.load(model_path)
+    vectorizer = joblib.load(vectorizer_path)
     app.logger.info("Model loaded successfully")
 except Exception as e:
+    print(f"Model loading failed: {str(e)}")
     app.logger.error(f"Model loading failed: {str(e)}")
     model = None
     vectorizer = None
@@ -51,11 +39,9 @@ def predict():
         if not text:
             return jsonify({'error': 'Text is required'}), 400
         
-        # Process prediction
-        with parallel_backend('threading'):
-            vec_text = vectorizer.transform([text])
-            prediction = model.predict(vec_text)[0]
-            
+        vec_text = vectorizer.transform([text])
+        prediction = model.predict(vec_text)[0]
+        
         return jsonify({
             'prediction': prediction,
             'model_version': MODEL_VERSION
