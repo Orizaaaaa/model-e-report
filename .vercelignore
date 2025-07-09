@@ -1,7 +1,0 @@
-data/
-*.ipynb
-*.csv
-*.jpg
-*.png
-venv/
-__pycache__/
