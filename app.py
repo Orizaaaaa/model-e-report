@@ -3,7 +3,7 @@ import warnings
 from flask import Flask, request, jsonify
 import joblib
 # from joblib import parallel_backend  # Jangan dulu pakai ini
-
+# di dataset ada 2 yang 2000 adalah yang belum di test tapi dataset nya terbaru
 warnings.filterwarnings("ignore", category=UserWarning)
 
 app = Flask(__name__)
