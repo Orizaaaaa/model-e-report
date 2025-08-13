@@ -58,6 +58,7 @@ tfidf_vectorizer = TfidfVectorizer(
     decode_error='replace'
 )
 
+#  Preprocessing Data
 X_tfidf = tfidf_vectorizer.fit_transform(df_cleaned['laporan'])
 y = df_cleaned['label']
 
