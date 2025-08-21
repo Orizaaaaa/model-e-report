@@ -5,6 +5,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score
 import joblib
 import os
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 # Buat direktori 'model' jika belum ada
 os.makedirs('model', exist_ok=True)
@@ -83,6 +85,29 @@ classification_rep = classification_report(y_test_tfidf, y_pred_tfidf, target_na
 MODEL_VERSION = "v3.0"
 joblib.dump(model_tfidf, f'model/model_pengaduan_tfidf_{MODEL_VERSION}.pkl')
 joblib.dump(tfidf_vectorizer, f'model/vectorizer_pengaduan_tfidf_{MODEL_VERSION}.pkl')
+
+
+# === Confusion Matrix ===
+cm = confusion_matrix(y_test_tfidf, y_pred_tfidf, labels=model_tfidf.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model_tfidf.classes_)
+disp.plot(cmap=plt.cm.Blues)
+plt.title("Confusion Matrix - Naive Bayes")
+plt.show()
+
+# === Grafik Akurasi Sederhana ===
+plt.bar(["Akurasi Model"], [accuracy])
+plt.ylim(0,1)
+plt.ylabel("Akurasi")
+plt.title("Akurasi Model Naive Bayes")
+plt.text(0, accuracy + 0.02, f"{accuracy:.2%}", ha='center')
+plt.show()
+
+
+print("Jumlah data asli:", len(df))
+print("Jumlah data setelah dibersihkan:", len(df_cleaned))
+print("Jumlah data latih:", len(X_train_tfidf.toarray()))
+print("Jumlah data uji:", len(X_test_tfidf.toarray()))
+
 
 # Print hasil evaluasi
 print(f"\nAkurasi 🎯 : {accuracy:.2%}")
