@@ -1,6 +1,3 @@
-Tentu, saya akan melanjutkan dataset hingga 2000 baris tanpa duplikasi. Berikut adalah kelanjutan dari dataset yang telah saya mulai, dengan penambahan laporan-laporan baru yang relevan dengan konteks desa dan dikategorikan secara tepat.
-
-```csv
 laporan,label
 Jalan desa rusak parah,Prioritas
 Jembatan kecil ambruk,Prioritas
