@@ -14,7 +14,8 @@ env/
 
 # Distribution / packaging
 .Python
-firebase.json
+.env
+nik-auth/firebase.json
 build/
 develop-eggs/
 dist/
