@@ -14,6 +14,7 @@ env/
 
 # Distribution / packaging
 .Python
+firebase.json
 build/
 develop-eggs/
 dist/
