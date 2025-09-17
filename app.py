@@ -121,7 +121,7 @@ def predict():
 
         # 🔹 Utamakan hasil ChatGPT
         prediction = get_chatgpt_prediction(text)
-        message = "Prediksi utama berasal dari ChatGPT."
+        message = "Prediksi utama"
 
         # 🔹 Cek aturan manual override
         override = rule_based_override(text)
